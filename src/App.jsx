@@ -1,10 +1,11 @@
 import React from 'react'
+import Path from './route/Path'
 
 const App = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+     <Path/> 
+    </>
   )
 }
 

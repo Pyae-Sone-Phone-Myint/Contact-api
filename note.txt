@@ -1,0 +1,3 @@
+Continue update detail page and add photo to data
+GuardRoute
+Show Navbar expect login and register page Or add sidebar to go and back home page and login and register pages

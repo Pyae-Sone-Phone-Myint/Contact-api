@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../services/auth";
+import {
+  Card,
+  Input,
+  Checkbox,
+  Button,
+  Typography,
+} from "@material-tailwind/react";
 
 const Register = () => {
-  const [name, setName] = useState("aung aung");
-  const [email, setEmail] = useState("aunga@gmail.comm");
-  const [password, setPassword] = useState("adfdafda");
-  const [password_confirmation, setPasswordConfirmation] = useState("adfdafda");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password_confirmation, setPasswordConfirmation] = useState("");
   const [register] = useRegisterMutation();
   const nav = useNavigate();
 
@@ -15,7 +22,8 @@ const Register = () => {
       e.preventDefault();
       const user = { name, email, password, password_confirmation };
       const { data } = await register(user);
-      if (data.success) {
+      console.log(data)
+      if (data?.success) {
         return nav("/login");
       }
       // console.log(data);
@@ -26,76 +34,77 @@ const Register = () => {
 
   return (
     <div className=" flex justify-center h-screen items-center">
-      <div className="mx-auto flex items-center flex-col  p-10 border-white border w-fit rounded-lg backdrop-blur-lg">
-        <h1 className="text-3xl font-bold text-red-500 mb-10">Register</h1>
+      <Card
+        color="transparent"
+        shadow={false}
+        className=" bg-transparent backdrop-blur-lg w-fit p-10"
+      >
+        <Typography variant="h4" color="blue-gray">
+          Sign Up
+        </Typography>
+        <Typography color="gray" className="mt-1 font-normal">
+          Enter your details to register.
+        </Typography>
         <form
-          action=""
+          className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
           onSubmit={submitHandler}
-          className=" flex flex-col  gap-5 w-96"
         >
-          <div className="flex flex-col gap-1">
-            <label htmlFor="name" className=" label">
-              Name
-            </label>
-            <input
-              type="text"
-              placeholder="Name"
-              id="name"
-              className=" input"
+          <div className="mb-4 flex flex-col gap-6">
+            <Input
+              size="lg"
+              label="Name"
               onChange={(e) => setName(e.target.value)}
-              value={name}
             />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="label">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Your email"
-              className=" input"
+            <Input
+              size="lg"
+              label="Email"
               onChange={(e) => setEmail(e.target.value)}
-              value={email}
             />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="label">
-              Password
-            </label>
-            <input
-              id="password"
+            <Input
               type="password"
-              placeholder="Password"
-              className=" input"
+              size="lg"
+              label="Password"
               onChange={(e) => setPassword(e.target.value)}
-              value={password}
             />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="confirmed-password" className="label">
-              Confirmed Password
-            </label>
-            <input
+            <Input
               type="password"
-              placeholder="Confirmed password"
-              className=" input"
-              id="confirmed-password"
+              size="lg"
+              label="Confirmed Password"
               onChange={(e) => setPasswordConfirmation(e.target.value)}
-              value={password_confirmation}
             />
           </div>
-          <button className="bg-blue-500 py-2 rounded-lg px-3 text-white">
+          <Checkbox
+            label={
+              <Typography
+                variant="small"
+                color="gray"
+                className="flex items-center font-normal"
+              >
+                I agree the
+                <a
+                  href="#"
+                  className="font-medium transition-colors hover:text-blue-500"
+                >
+                  &nbsp;Terms and Conditions
+                </a>
+              </Typography>
+            }
+            containerProps={{ className: "-ml-2.5" }}
+          />
+          <Button type="submit" className="mt-6" fullWidth>
             Register
-          </button>
-          <div className="flex text-sm gap-2">
-            <p>Already have an account?</p>
-            <Link to={"/login"}>
-              <button className=" text-blue-500 underline">Login</button>
-            </Link>
-          </div>
+          </Button>
+          <Typography color="gray" className="mt-4 text-center font-normal">
+            Already have an account?{" "}
+            <a
+              href="/login"
+              className="font-medium text-blue-500 transition-colors hover:text-blue-700"
+            >
+              Sign In
+            </a>
+          </Typography>
         </form>
-      </div>
+      </Card>
     </div>
   );
 };

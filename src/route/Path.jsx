@@ -7,18 +7,44 @@ import CreateUser from "../components/controls/CreateUser";
 import UpdateUser from "../components/controls/UpdateUser";
 import Image from "../components/Image";
 import DetailUser from "../components/controls/DetailUser";
+import RouteGuard from "../routeGuart/RouteGuard";
+import RouteGuardDashboard from "../routeGuart/RouteGuradDashboard";
+import Header from "../components/Header";
 
 const Path = () => {
   return (
     <>
-      <Image/>
+      <Image />
       <Routes>
-        <Route path="/" element={<Navbar />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/create-user" element={<CreateUser />} />
-        <Route path={"/update-user/:id"} element={<UpdateUser />} />
-        <Route path="/detail-user/:id" element={<DetailUser/>}/>
+        <Route
+          path="/register"
+          element={
+            <RouteGuard>
+              <Register />
+            </RouteGuard>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RouteGuard>
+              <Login />
+            </RouteGuard>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <RouteGuardDashboard>
+              <Navbar />
+            </RouteGuardDashboard>
+          }
+        > 
+          <Route path='dashboard' element={<Header/>} />
+          <Route path="create-user" element={<CreateUser />} />
+          <Route path={"update-user/:id"} element={<UpdateUser />} />
+          <Route path="detail-user/:id" element={<DetailUser />} />
+        </Route>
       </Routes>
     </>
   );

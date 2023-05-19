@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsSearch, BsPencil } from "react-icons/bs";
 import {BiUserPlus,BiDetail} from "react-icons/bi"
 import { HiUserCircle } from "react-icons/hi";
@@ -23,6 +23,7 @@ import {
 import Delete from "./controls/Delete";
 import Update from "./controls/Update";
 import Detail from "./controls/Detail";
+import { Link } from "react-router-dom";
 
 const TABS = [
     {
@@ -42,10 +43,12 @@ const TABS = [
 const ContactTable = () => {
   const token = Cookies.get("token");
   const TABLE_HEAD = ["Name", "Phone", "Address", "Control"];
+  const [search, setSearch] = useState('');
 
   const { data } = useGetContactsQuery(token);
-  console.log(data);
-  const TABLE_ROWS = data?.contacts?.data.map((item) => {
+  const filterData = data?.contacts?.data.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
+  
+  const TABLE_ROWS = filterData?.map((item) => {
     return (
       <tr key={item.id} className="even:bg-blue-gray-50/50">
         <td className="p-3">
@@ -103,18 +106,20 @@ const ContactTable = () => {
                 </Typography>
               </div>
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                <Button variant="outlined" color="blue-gray" size="sm">
+                {/* <Button variant="outlined" color="blue-gray" size="sm">
                   view all
-                </Button>
-                <a
+                </Button> */}
+                <Link to={'/create-user'}>
+                <Button
                   className="flex items-center gap-3 rounded text-white px-2 bg-blue-500"
                   color="blue"
                   size="sm"
-                  href="/create-user"
-                >
+                  href=""
+                  >
                   <BiUserPlus strokeWidth={1} className="h-4 w-4" /> Add
                   member
-                </a>
+                </Button>
+                  </Link>
               </div>
             </div>
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -129,6 +134,7 @@ const ContactTable = () => {
               </Tabs>
               <div className="w-full md:w-72">
                 <Input
+                  onChange={e => setSearch(e.target.value)}
                   label="Search"
                   icon={<BsSearch className="h-5 w-5" />}
                 />

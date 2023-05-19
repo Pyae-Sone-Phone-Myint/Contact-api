@@ -22,7 +22,7 @@ const CreateUser = () => {
   const submitHandler = async (e) => {
     try {
       e.preventDefault();
-      const user = { name, phone, email, address };
+      const user = { name, phone, email, address};
       const { data } = await getCreateUser({ user, token });
       // console.log(data);
       if (data?.success) {

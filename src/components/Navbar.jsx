@@ -1,9 +1,23 @@
 import Cookies from "js-cookie";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../services/auth";
 import { BsPersonCircle } from "react-icons/bs";
-import Header from "./Header";
+import {
+  Card,
+  Typography,
+  List,
+  ListItem,
+  ListItemPrefix,
+  ListItemSuffix,
+  Chip,
+} from "@material-tailwind/react";
+import {
+  PresentationChartBarIcon,
+  HomeIcon,
+  PowerIcon,
+} from "@heroicons/react/24/solid";
+import Sidebar from "./Sidebar";
 
 const Navbar = () => {
   const token = Cookies.get("token");
@@ -13,6 +27,10 @@ const Navbar = () => {
     await logout(token);
     Cookies.remove("token");
     nav("/");
+  };
+
+  const dashboard = () => {
+    nav("/dashboard");
   };
 
   return (
@@ -37,7 +55,8 @@ const Navbar = () => {
           </div>
         )}
       </nav>
-      <Header />
+      <Sidebar/>
+      <Outlet />
     </>
   );
 };

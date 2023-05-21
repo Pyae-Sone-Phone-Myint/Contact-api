@@ -79,7 +79,7 @@ const ContactTable = () => {
         </td>
         <td className="p-4">
           <Typography variant="small" color="blue-gray" className="font-normal">
-            {item.address ? item.address : "example@gmail.com"}
+            {item.address ? item.address : "Address"}
           </Typography>
         </td>
         <td className="p-4 flex gap-4">

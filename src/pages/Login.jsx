@@ -13,6 +13,7 @@ import {
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [check,setCheck] = useState(false)
   const [login] = useLoginMutation();
   const nav = useNavigate();
 
@@ -46,6 +47,7 @@ const Login = () => {
             <Input type="password" size="lg" label="Password" onChange={e => setPassword(e.target.value)} />
           </div>
           <Checkbox
+            onClick={() => setCheck(c => !c)}
             label={
               <Typography
                 variant="small"
@@ -63,7 +65,7 @@ const Login = () => {
             }
             containerProps={{ className: "-ml-2.5" }}
           />
-          <Button type="submit" className="mt-6" fullWidth>
+          <Button type="submit" className="mt-6" disabled={!check && true} fullWidth>
             Login
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">

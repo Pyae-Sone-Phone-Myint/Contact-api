@@ -23,7 +23,7 @@ const Sidebar = () => {
   const [logout] = useLogoutMutation();
   const nav = useNavigate();
   const [sidebar, setSidebar] = useState(false);
-  console.log(sidebar);
+  // console.log(sidebar);
   const logoutHandler = async () => {
     await logout(token);
     Cookies.remove("token");

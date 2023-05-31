@@ -14,6 +14,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
+  const [check, setCheck] = useState(false);
   const [register] = useRegisterMutation();
   const nav = useNavigate();
 
@@ -22,11 +23,10 @@ const Register = () => {
       e.preventDefault();
       const user = { name, email, password, password_confirmation };
       const { data } = await register(user);
-      console.log(data)
+      console.log(data);
       if (data?.success) {
         return nav("/login");
       }
-      // console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -74,6 +74,7 @@ const Register = () => {
             />
           </div>
           <Checkbox
+            onClick={() => setCheck(c => !c)}
             label={
               <Typography
                 variant="small"
@@ -91,7 +92,7 @@ const Register = () => {
             }
             containerProps={{ className: "-ml-2.5" }}
           />
-          <Button type="submit" className="mt-6" fullWidth>
+          <Button type="submit" className="mt-6" disabled={!check && true}  fullWidth>
             Register
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
